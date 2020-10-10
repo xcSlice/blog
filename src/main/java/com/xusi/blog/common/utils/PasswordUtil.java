@@ -1,7 +1,6 @@
 package com.xusi.blog.common.utils;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,26 +15,27 @@ import java.util.Map;
  **/
 @Component
 public class PasswordUtil {
-    @Resource
-    private BCryptPasswordEncoder passwordEncoder;
+//    @Resource
+//    private BCryptPasswordEncoder passwordEncoder;
 
     public  boolean isValidPassword(String password, String encodePassword){
-        return passwordEncoder.matches(password,encodePassword);
+//        return passwordEncoder.matches(password,encodePassword);
+        return true;
     }
 
-    public Map<String, String> getToken(UserDetails userDetails) {
-        String password = userDetails.getPassword();
-        String username = userDetails.getUsername();
-        String authorities = userDetails.getAuthorities().toString()
-                .replace("ROLE_","")
-                .replace("[","")
-                .replace("]","");
-        Map<String,String> map = new HashMap<>();
-        map.put("username",username);
-        map.put("password",password);
-        map.put("authorities",authorities);
-
-        return map;
-
-    }
+//    public Map<String, String> getToken(UserDetails userDetails) {
+//        String password = userDetails.getPassword();
+//        String username = userDetails.getUsername();
+//        String authorities = userDetails.getAuthorities().toString()
+//                .replace("ROLE_","")
+//                .replace("[","")
+//                .replace("]","");
+//        Map<String,String> map = new HashMap<>();
+//        map.put("username",username);
+//        map.put("password",password);
+//        map.put("authorities",authorities);
+//
+//        return map;
+//
+//    }
 }

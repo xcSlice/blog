@@ -14,12 +14,7 @@ import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,10 +38,8 @@ public class BlogUserController {
     private BlogUserServiceImpl userService;
     @Autowired
     private BlogUserToRoleServiceImpl b2rService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Resource
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
+
+
     @Resource
     private JwtUtil jwtUtil;
     @Resource
@@ -63,29 +56,29 @@ public class BlogUserController {
         b2rService.save(b2r);
         return R.ok(200).message("注册成功");
     }
-
-    @PostMapping("/register")
-    public R register(String username, String password){
-        log.info("开始注册");
-//        username not in database
-        if (userService.isExistByName(username)){
-            return R.error(500).message("username is exist");
-        }
-//        Bcryt pw
-        String bcrytPw = passwordEncoder.encode(password);
-//        wrapper user
-        BlogUser user = new BlogUser();
-        user.setUserName(username);
-        user.setUserPw(bcrytPw);
-        userService.save(user);
-//      级联绑定权限,默认为user
-        log.info("userid:"+user.getId().toString());
-        BlogUserToRole b2r = new BlogUserToRole();
-        b2r.setUserId(user.getId());
-        b2r.setRoleId(2L);
-        b2rService.save(b2r);
-        return R.ok(200).message("register success");
-    }
+//
+//    @PostMapping("/register")
+//    public R register(String username, String password){
+//        log.info("开始注册");
+////        username not in database
+//        if (userService.isExistByName(username)){
+//            return R.error(500).message("username is exist");
+//        }
+////        Bcryt pw
+//        String bcrytPw = passwordEncoder.encode(password);
+////        wrapper user
+//        BlogUser user = new BlogUser();
+//        user.setUserName(username);
+//        user.setUserPw(bcrytPw);
+//        userService.save(user);
+////      级联绑定权限,默认为user
+//        log.info("userid:"+user.getId().toString());
+//        BlogUserToRole b2r = new BlogUserToRole();
+//        b2r.setUserId(user.getId());
+//        b2r.setRoleId(2L);
+//        b2rService.save(b2r);
+//        return R.ok(200).message("register success");
+//    }
 
     @PutMapping("/update")
     public R update(String username,String password,BlogUser user){

@@ -1,8 +1,7 @@
 package com.xusi.blog.common.utils;
 
-import com.xusi.blog.security.config.MyUserDetailsService;
+
 import io.jsonwebtoken.*;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
