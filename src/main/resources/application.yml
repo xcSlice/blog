@@ -1,0 +1,29 @@
+server:
+  port: 52014
+  servlet:
+    application-display-name: blog
+
+spring:
+  datasource:
+    url: jdbc:mysql://47.115.48.7:3306/blog?serverTiemzone=GMT%2B8
+    username: blog_test
+    password: fYE7EwAwwT3ARRp6
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jackson:
+    date-format: yyyy-MM-dd hh:mm:ss
+    time-zone: GMT+8
+#  redis:
+#    password: redis_test
+#    port: 6379
+#    host: 127.0.0.1
+
+mybatis-plus:
+  global-config:
+    db-config:
+#      逻辑删除
+      logic-delete-field: is_delete
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
