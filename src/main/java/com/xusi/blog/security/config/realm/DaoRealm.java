@@ -6,6 +6,7 @@ import com.xusi.blog.security.entity.BlogUserToRole;
 import com.xusi.blog.security.service.impl.BlogRoleServiceImpl;
 import com.xusi.blog.security.service.impl.BlogUserServiceImpl;
 import com.xusi.blog.security.service.impl.BlogUserToRoleServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  * @author: xusi
  * @create:2020-10-10 14:30
  **/
+@Slf4j
 public class DaoRealm extends AuthorizingRealm {
 
     @Resource
@@ -32,6 +34,7 @@ public class DaoRealm extends AuthorizingRealm {
     // 验证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        log.info("授权验证");
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = token.getPrincipal().toString();
         char[] password = upToken.getPassword();
@@ -39,15 +42,16 @@ public class DaoRealm extends AuthorizingRealm {
         BlogUser user = userService.getOneByName(username);
         if(user == null) return null;
         // 传入的是数据库中的对象还是 token ？
-        return new SimpleAuthenticationInfo(user.getUserName(),password,this.getName());
+        return new SimpleAuthenticationInfo(user.getUserName(),user.getUserPw(),this.getName());
     }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        log.info("授权管理");
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         System.out.println(principals);
         // 获取 user 对应的 role
-        BlogUser user = userService.getOneByName("admin");
+        BlogUser user = userService.getOneByName(principals.toString());
         BlogUserToRole u2r = u2rService.getOneByUserId(user.getId());
         BlogRole role = roleService.getById(u2r.getRoleId());
 
