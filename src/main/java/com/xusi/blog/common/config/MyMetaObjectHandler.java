@@ -3,6 +3,7 @@ package com.xusi.blog.common.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
@@ -32,4 +33,5 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 //      配置 更新 自动填充
         this.strictUpdateFill(metaObject,"gmt_modified",LocalDateTime.class,LocalDateTime.now());
     }
+
 }

@@ -63,12 +63,9 @@ public class ShiroConfig {
 
     //    创建 SecurityManager
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("daoRealm") DaoRealm daoRealm) {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        Collection<Realm> realms = new HashSet<>();
-        realms.add(daoRealm);
-        realms.add(tokenRealm());
-        securityManager.setRealms(realms);
+        securityManager.setRealm(tokenRealm());
 
         /*
          * 关闭shiro自带的session，详情见文档
@@ -84,19 +81,19 @@ public class ShiroConfig {
     }
 
     //    创建自定义的 realm
-    @Bean(name = "daoRealm")
-    public DaoRealm daoRealm() {
-        DaoRealm daoRealm = new DaoRealm();
-        daoRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-//        开启缓存管理
-//        daoRealm.setCacheManager(new RedisCacheManager());
-//        daoRealm.setCachingEnabled(true);
-////        开启全局授权缓存
-//        daoRealm.setAuthorizationCachingEnabled(true);
-////        开启全局验证缓存
-//        daoRealm.setAuthenticationCachingEnabled(true);
-        return daoRealm;
-    }
+//    @Bean(name = "daoRealm")
+//    public DaoRealm daoRealm() {
+//        DaoRealm daoRealm = new DaoRealm();
+//        daoRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+////        开启缓存管理
+////        daoRealm.setCacheManager(new RedisCacheManager());
+////        daoRealm.setCachingEnabled(true);
+//////        开启全局授权缓存
+////        daoRealm.setAuthorizationCachingEnabled(true);
+//////        开启全局验证缓存
+////        daoRealm.setAuthenticationCachingEnabled(true);
+//        return daoRealm;
+//    }
 
     @Bean(name = "tokenRealm")
     public TokenRealm tokenRealm(){

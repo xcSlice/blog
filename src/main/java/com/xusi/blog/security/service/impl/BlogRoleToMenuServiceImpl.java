@@ -32,6 +32,7 @@ public class BlogRoleToMenuServiceImpl extends ServiceImpl<BlogRoleToMenuMapper,
 
     @Override
     public List<MenuReader> getByRoleId(Long id) {
+
         String key = "menu:getByRoleId:"+id;
         List<MenuReader> result = (List<MenuReader>) redisUtil.get(key);
         if (result != null) {
@@ -39,6 +40,7 @@ public class BlogRoleToMenuServiceImpl extends ServiceImpl<BlogRoleToMenuMapper,
         }
         List<Long> menuPid = new ArrayList<>();
         QueryWrapper<BlogRoleToMenu> wrapper = new QueryWrapper<>();
+
         wrapper.eq("role_id", id);
         List<BlogRoleToMenu> b2mList = list(wrapper);
 //        将获取list的 menu id 传入 resultList

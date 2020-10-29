@@ -59,4 +59,9 @@ public class DaoRealm extends AuthorizingRealm {
         info.addRole(role.getRoleName());
         return info;
     }
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token != null;
+    }
 }

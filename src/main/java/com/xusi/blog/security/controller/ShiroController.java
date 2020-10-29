@@ -66,10 +66,10 @@ public class ShiroController {
 
     @PostMapping("/login")
     public ResponseEntity login(String username,String password){
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-        subject.login(token);
-        System.out.println(subject);
+//        Subject subject = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+//        subject.login(token);
+//        System.out.println(subject);
         Md5Hash md5Hash = new Md5Hash(password);
         String md5Pw = md5Hash.toString();
         String upToken = JwtUtil.TOKEN_PREFIX + jwtUtil.createToken(username,md5Pw,false);
